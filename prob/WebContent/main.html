@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Raleway">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script type="text/javascript">
+let xdata;
+const log = console.log;
+$(()=>{
+	
+		$('#center').hide();	
+		$('#loginform').hide();
+		$('#addform').hide();
+		$('#btn1').click(()=>{
+			$('#loginform').slideDown('slow');
+			$('#addform').hide();
+			
+		})
+		
+		$('#btn2').click(()=>{
+			$('#addform').slideDown('slow');
+			$('#loginform').hide();
+		})
+		
+		$('#btn3').click(()=>{
+			$.ajax({
+				url : 'login.jsp',
+				type : 'get',
+				dataType : 'json',
+				data : {id : $('#id').val(), pw : $('#pw').val()},
+				success : ((data)=>{
+					if($('#id').val()==""){
+						alert('아이디를 입력해주세요')
+						return;
+					}
+					if(data.user==1){
+						$('#center').slideDown('slow');
+						
+					}else{
+						alert('로그인 실패')
+						
+					}
+				}),
+				error : ((e)=>{
+					alert('실패')
+			})
+				
+			})
+			
+		})
+		$('#btn4').click(()=>{
+			$.ajax({
+				url : 'adduser.jsp',
+				type : 'get',
+				dataType : 'json',
+				data : {id : $('#id2').val(), 
+					pw : $('#pw2').val(), 
+					name : $('#name').val()}, 
+				success : ((data)=>{
+					if($('#id2').val()==""){
+						alert('아이디를 입력해주세요')
+						return;
+					}
+					if(data.add==1){
+						alert('가입성공')
+					}else{
+						alert('가입 실패')
+						
+					}
+				}),
+				error : ((e)=>{
+					alert('실패')
+			})
+				
+			})
+			
+		})
+		
+		$('#a1').click(()=>{
+			$.ajax({
+				url:'chart_emp.jsp' ,
+				dataType : 'json',
+				
+				success : ((data)=>{
+					
+					xdata = data;
+					chart();
+					
+					
+				}),
+				error: (()=>{
+					alert('실패')
+					
+				})
+				
+				
+				
+			})
+			
+		})
+	
+		
+})
+
+
+</script>
+<style>
+body, h1 {
+	font-family: "Raleway", sans-serif
+}
+
+body, html {
+	height: 100%
+}
+
+.bgimg {
+	background-image: url('https://i.imgur.com/7gDJ9OI.jpg');
+	min-height: 100%;
+	background-position: center;
+	background-size: cover;
+}
+body{
+	font-weight : bold;
+}
+/* #head{ */
+/* 	position: relative; */
+/* 	bottom: 200px; */
+/* 	color : black; */
+/* } */
+/* #space{ */
+/* position: relative; */
+/* 	bottom: 200px; */
+/* } */
+/* #login{ */
+/* position: relative; */
+/* 	bottom: 200px; */
+/* 	color : black; */
+/* } */
+.w3-container {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+#center {
+	position: relative;
+	width: 1200px;
+	height: 600px;
+	left: 200px;
+	top: 80px;
+	background: white;
+}
+
+
+.w3-bar-item w3-button{
+	background: black;
+}
+.w3-btn, .w3-button {
+	color : black;
+}
+.w3-animate-left {
+	position: absolute;
+}
+#btn1, #btn2{
+	background-color: rgba(255, 255, 255, 0);
+	border : none;
+	color : white;
+}
+.idpw{
+	color : black;
+}
+.submit{
+	background: white;
+	border : none;
+	color : black;
+}
+</style>
+<body>
+
+	<div
+		class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+		<div class="w3-display-topleft w3-padding-large w3-xlarge">비트캠프
+		</div>
+		<div class="w3-display-middle">
+			<h1 id="head" class="w3-jumbo w3-animate-top">EVERYCHART</h1>
+			<hr id="space" class="w3-border-grey"
+				style="margin: auto; width: 40%">
+			<p id="login" class="w3-large w3-center">
+				<button id="btn1">로그인</button>
+				<button id="btn2">회원가입</button>
+			</p>
+
+			<form id="loginform" class="w3-container" method="get">
+				<div id="formdiv" class="w3-container w3-blue">
+					<h2>로그인</h2>
+				</div>
+				<p>
+					<label class="idpw">ID</label> <input class="w3-input" type="text" id="id"
+						name="id">
+				</p>
+				<p>
+					<label class="idpw">PASSWORD</label> <input class="w3-input" type="text" id="pw"
+						name="pw">
+				</p>
+				<p>
+					<button type="button" id="btn3" class="submit">로그인</button>
+				</p>
+			</form>
+
+
+
+
+			<form action="adduser.jsp" id="addform" class="w3-container"
+				method="get">
+				<div id="formdiv" class="w3-container w3-blue">
+					<h2>회원가입</h2>
+				</div>
+				<label class="idpw">ID</label> <input class="w3-input" type="text" id="id2"
+					name="id2"> <label class="idpw">PASSWORD</label> <input class="w3-input"
+					type="text" id="pw2" name="pw2"> <label class="idpw">NAME</label> <input
+					class="w3-input" type="text" id="name" name="name"><br>
+				<button type="button" id="btn4" class="submit">가입</button>
+				</p>
+			</form>
+		</div>
+
+		<div class="w3-display-bottomleft w3-padding-large">
+			Powered by <a href="https://bitcamp.co.kr/index.php?main_page=home"
+				target="_blank">BIT CAMP-신재훈</a>
+		</div>
+		<div id="center">
+			<div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="leftMenu">
+  <button onclick="closeLeftMenu()" class="w3-bar-item w3-button w3-large">Close &times;</button>
+  <a href="#" id="a1" class="w3-bar-item w3-button">차트 보기</a>
+  <a href="http://localhost:8000/prob/main.html" class="w3-bar-item w3-button">홈으로</a>
+  <a href="#" class="w3-bar-item w3-button">Link 3</a>
+</div>
+
+
+
+<div class="w3-teal">
+  <button class="w3-button w3-teal w3-xlarge w3-left" onclick="openLeftMenu()">&#9776;</button>
+ 
+  <div class="w3-container">
+    <h1>My Page</h1>
+  </div>
+</div>
+
+<div id="centermain"class="w3-container">
+
+</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	function openLeftMenu() {
+		  document.getElementById("leftMenu").style.display = "block";
+		}
+
+		function closeLeftMenu() {
+		  document.getElementById("leftMenu").style.display = "none";
+		}
+
+	
+		function chart(){
+			Highcharts.chart('centermain', {
+
+			    title: {
+			        text: 'Solar Employment Growth by Sector, 2010-2016'
+			    },
+
+			    subtitle: {
+			        text: 'Source: thesolarfoundation.com'
+			    },
+
+			    yAxis: {
+			        title: {
+			            text: 'Number of Employees'
+			        }
+			    },
+			    legend: {
+			        layout: 'vertical',
+			        align: 'right',
+			        verticalAlign: 'middle'
+			    },
+
+			    plotOptions: {
+			        series: {
+			            label: {
+			                connectorAllowed: false
+			            },
+			            pointStart: 2010
+			        }
+			    },
+
+			    series: xdata,
+
+			    responsive: {
+			        rules: [{
+			            condition: {
+			                maxWidth: 500
+			            },
+			            chartOptions: {
+			                legend: {
+			                    layout: 'horizontal',
+			                    align: 'center',
+			                    verticalAlign: 'bottom'
+			                }
+			            }
+			        }]
+			    }
+
+			});
+}		
+		
+</script>
+</body>
+</html>
