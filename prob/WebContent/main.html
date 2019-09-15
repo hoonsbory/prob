@@ -6,12 +6,15 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
 <script type="text/javascript">
 let xdata;
 const log = console.log;
@@ -20,15 +23,15 @@ $(()=>{
 		$('#center').hide();	
 		$('#loginform').hide();
 		$('#addform').hide();
-		$('#btn1').click(()=>{
+		$('#btnreal').click(()=>{
 			$('#loginform').slideDown('slow');
-			$('#addform').hide();
+			$('#addform').slideUp('slow');
 			
 		})
 		
-		$('#btn2').click(()=>{
+		$('#btnreal2').click(()=>{
 			$('#addform').slideDown('slow');
-			$('#loginform').hide();
+			$('#loginform').slideUp('slow')
 		})
 		
 		$('#btn3').click(()=>{
@@ -71,7 +74,10 @@ $(()=>{
 						return;
 					}
 					if(data.add==1){
-						alert('가입성공')
+						alert('가입이 완료되었습니다.')
+						$('#loginform').slideDown('slow');
+						$('#addform').slideUp('slow');
+						
 					}else{
 						alert('가입 실패')
 						
@@ -94,7 +100,7 @@ $(()=>{
 					
 					xdata = data;
 					chart();
-					
+					$('#bitimg').css('opacity', '0');
 					
 				}),
 				error: (()=>{
@@ -128,8 +134,9 @@ body, html {
 	background-position: center;
 	background-size: cover;
 }
-body{
-	font-weight : bold;
+
+body {
+	font-weight: bold;
 }
 /* #head{ */
 /* 	position: relative; */
@@ -149,37 +156,143 @@ body{
 	background-color: rgba(255, 255, 255, 0.5);
 }
 
+#head {
+	font-size: 100px !important;
+}
+
+#centermain {
+}
+
+#bitimg {
+	left: 35%; 
+	position: absolute;
+	top: 80px;
+}
+
+#centermain2 {
+	position: relative;
+}
+
 #center {
+	border-radius: 10px;
 	position: relative;
 	width: 1200px;
 	height: 600px;
-	left: 200px;
-	top: 80px;
+	left: 330px;
+	top: 180px;
 	background: white;
 }
 
 
-.w3-bar-item w3-button{
+
+.w3-teal {
+	background-color: rgba(0, 149, 255) !important;
+}
+
+.w3-bar-item w3-button {
 	background: black;
 }
+
 .w3-btn, .w3-button {
-	color : black;
+	color: black;
 }
+
 .w3-animate-left {
 	position: absolute;
 }
-#btn1, #btn2{
+
+#btn1, #btn2 {
 	background-color: rgba(255, 255, 255, 0);
-	border : none;
-	color : white;
+	border: none;
+	color: white;
 }
-.idpw{
-	color : black;
+
+.idpw {
+	color: black;
 }
-.submit{
+
+.submit {
 	background: white;
-	border : none;
-	color : black;
+	border: none;
+	color: black;
+}
+
+.w3-animate-left {
+	animation: none;
+}
+
+.w3-sidebar {
+	height: auto;
+}
+
+#btnreal, #btnreal2 {
+	width: 414.86px;
+	border: none;
+	background: #4099f9;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: white;
+	font-size: 2em;
+	text-align: left;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	position: relative;
+	left: 15%;
+}
+
+input {
+	color: black;
+}
+
+.button {
+	display: inline-block;
+	border-radius: 4px;
+	background-color: #f4511e;
+	border: none;
+	color: #FFFFFF;
+	text-align: center;
+	font-size: 28px;
+	padding: 20px;
+	width: 200px;
+	transition: all 0.5s;
+	cursor: pointer;
+	margin: 5px;
+	height: 70px;
+}
+
+.button span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+}
+
+.button span:after {
+	content: '\00bb';
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	right: -20px;
+	transition: 0.5s;
+}
+
+.button:hover span {
+	padding-right: 25px;
+}
+
+.button:hover span:after {
+	opacity: 1;
+	right: 0;
+}
+
+#loginform, #addform {
+	position: relative;
+	left: 15%;
+	width: 414.86px;
+}
+
+#addform {
+	padding-top: 15px;
 }
 </style>
 <body>
@@ -190,43 +303,53 @@ body{
 		</div>
 		<div class="w3-display-middle">
 			<h1 id="head" class="w3-jumbo w3-animate-top">EVERYCHART</h1>
-			<hr id="space" class="w3-border-grey"
+			<hr id="space" class="w3-animate-top"
 				style="margin: auto; width: 40%">
 			<p id="login" class="w3-large w3-center">
-				<button id="btn1">로그인</button>
-				<button id="btn2">회원가입</button>
+			<p class="w3-animate-top" id="btn1"></p>
+
 			</p>
 
+
+			<button type="button" class="w3-animate-top" id="btnreal">로그인</button>
+
+
+
 			<form id="loginform" class="w3-container" method="get">
-				<div id="formdiv" class="w3-container w3-blue">
-					<h2>로그인</h2>
-				</div>
+				<br>
 				<p>
-					<label class="idpw">ID</label> <input class="w3-input" type="text" id="id"
-						name="id">
+					<label class="idpw">ID</label> <input class="w3-input" type="text"
+						id="id" name="id">
 				</p>
 				<p>
-					<label class="idpw">PASSWORD</label> <input class="w3-input" type="text" id="pw"
-						name="pw">
+					<label class="idpw">PASSWORD</label> <input class="w3-input"
+						type="password" id="pw" name="pw">
 				</p>
 				<p>
-					<button type="button" id="btn3" class="submit">로그인</button>
+					<button id="btn3" type="button" class="button"
+						style="vertical-align: middle">
+						<span>LOGIN </span>
+					</button>
 				</p>
 			</form>
-
+			<br>
+			<br>
+			<button type="button" id="btnreal2" class="w3-animate-top">회원가입</button>
 
 
 
 			<form action="adduser.jsp" id="addform" class="w3-container"
 				method="get">
-				<div id="formdiv" class="w3-container w3-blue">
-					<h2>회원가입</h2>
-				</div>
-				<label class="idpw">ID</label> <input class="w3-input" type="text" id="id2"
-					name="id2"> <label class="idpw">PASSWORD</label> <input class="w3-input"
-					type="text" id="pw2" name="pw2"> <label class="idpw">NAME</label> <input
-					class="w3-input" type="text" id="name" name="name"><br>
-				<button type="button" id="btn4" class="submit">가입</button>
+
+				<label class="idpw">ID</label> <input class="w3-input" type="text"
+					id="id2" name="id2"> <label class="idpw">PASSWORD</label> <input
+					class="w3-input" type="password" id="pw2" name="pw2"> <label
+					class="idpw">NAME</label> <input class="w3-input" type="text"
+					id="name" name="name"><br>
+				<button id="btn4" type="button" class="button"
+					style="vertical-align: middle">
+					<span>가입 </span>
+				</button>
 				</p>
 			</form>
 		</div>
@@ -236,26 +359,30 @@ body{
 				target="_blank">BIT CAMP-신재훈</a>
 		</div>
 		<div id="center">
-			<div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="leftMenu">
-  <button onclick="closeLeftMenu()" class="w3-bar-item w3-button w3-large">Close &times;</button>
-  <a href="#" id="a1" class="w3-bar-item w3-button">차트 보기</a>
-  <a href="http://localhost:8000/prob/main.html" class="w3-bar-item w3-button">홈으로</a>
-  <a href="#" class="w3-bar-item w3-button">Link 3</a>
-</div>
+			<div class="w3-sidebar w3-bar-block w3-card w3-animate-left"
+				style="display: none" id="leftMenu">
+				<button onclick="closeLeftMenu()"
+					class="w3-bar-item w3-button w3-large">Close &times;</button>
+				<a href="#" id="a1" class="w3-bar-item w3-button">차트 보기</a> <a
+					href="http://localhost:8000/prob/main.html"
+					class="w3-bar-item w3-button">홈으로</a>
+
+			</div>
 
 
 
-<div class="w3-teal">
-  <button class="w3-button w3-teal w3-xlarge w3-left" onclick="openLeftMenu()">&#9776;</button>
- 
-  <div class="w3-container">
-    <h1>My Page</h1>
-  </div>
-</div>
+			<div id="w3-button" class="w3-teal">
+				<button class="w3-button w3-teal w3-xlarge w3-left"
+					onclick="openLeftMenu()">&#9776;</button>
 
-<div id="centermain"class="w3-container">
-
-</div>
+				<div id="w3-head" class="w3-container">
+					<h1>Chart View</h1>
+				</div>
+			</div>
+			<div id="centermain2">
+				<img id="bitimg" src="https://i.imgur.com/bIpnPy6.png">
+				<div id="centermain" class="w3-container"></div>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -270,52 +397,33 @@ body{
 	
 		function chart(){
 			Highcharts.chart('centermain', {
-
+			    chart: {
+			        plotBackgroundColor: null,
+			        plotBorderWidth: null,
+			        plotShadow: false,
+			        type: 'pie'
+			    },
 			    title: {
-			        text: 'Solar Employment Growth by Sector, 2010-2016'
+			        text: '재훈컴퍼니 부서별 평균 급여'
 			    },
-
-			    subtitle: {
-			        text: 'Source: thesolarfoundation.com'
+			    tooltip: {
+			        pointFormat: '{series.name}: <b>{point.percentage:.1f}%<br>${point.y}</b>'
 			    },
-
-			    yAxis: {
-			        title: {
-			            text: 'Number of Employees'
-			        }
-			    },
-			    legend: {
-			        layout: 'vertical',
-			        align: 'right',
-			        verticalAlign: 'middle'
-			    },
-
 			    plotOptions: {
-			        series: {
-			            label: {
-			                connectorAllowed: false
+			        pie: {
+			            allowPointSelect: true,
+			            cursor: 'pointer',
+			            dataLabels: {
+			                enabled: false
 			            },
-			            pointStart: 2010
+			            showInLegend: true
 			        }
 			    },
-
-			    series: xdata,
-
-			    responsive: {
-			        rules: [{
-			            condition: {
-			                maxWidth: 500
-			            },
-			            chartOptions: {
-			                legend: {
-			                    layout: 'horizontal',
-			                    align: 'center',
-			                    verticalAlign: 'bottom'
-			                }
-			            }
-			        }]
-			    }
-
+			    series: [{
+			        name: '평균급여',
+			        colorByPoint: true,
+			        data: xdata
+			    }]
 			});
 }		
 		
